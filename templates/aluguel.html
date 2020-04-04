@@ -1,0 +1,13 @@
+{% extends "model-page.html" %}
+
+{% block content %}
+    <h2>Loja de Aluguel</h2>
+
+    <ul style="font-size: 18px">
+        {%for item in itens %}
+
+            <li> {{ itens.item }} - {{ itens.get_data_aluguel }} </li>
+
+        {% endfor %}
+    </ul>
+{% endblock content %}

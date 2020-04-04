@@ -22,6 +22,9 @@ class Itens (models.Model):
     def _str_(self):
         return self.item
 
+    def get_data_aluguel(self):
+        return self.data_aluguel.strftime('%d/%m/%Y %H:%M hrs')
+
 
     #reservaitem
     #cancelarreserva
