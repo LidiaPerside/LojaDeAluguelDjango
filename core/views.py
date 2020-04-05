@@ -40,15 +40,39 @@ def lista_itens(request):
 
 @login_required(login_url='/login/')
 def item (request):
-    return render (request, 'item.html')
+    id_item = request.GET.get('id')
+    dados = {}
+    if id_item:
+        dados['item'] = Itens.objects.get(id=id_item)
+    return render (request, 'item.html', dados)
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def submit_item(request):
     if request.POST:
         item = request.POST.get('item')
         data_aluguel = request.POST.get('data_aluguel')
         descricao = request.POST.get('descricao')
         usuario = request.user
-        Itens.objects.create(item=item, data_aluguel=data_aluguel, descricao=descricao, usuario=usuario)
+        id_item = request.POST.get('id_item')
+        if id_item:
+            #Itens.objects.filter(id=id_item).update(item=item, data_aluguel=data_aluguel, descricao=descricao)
+            item = Itens.objects.get(id=id_item)
+            if item.usuario == usuario:
+                item.item = item
+                item.descricao = descricao
+                item.data_aluguel - data_aluguel
+                item.save()
+        else:
+            Itens.objects.create(item=item, data_aluguel=data_aluguel, descricao=descricao, usuario=usuario)
 
     return redirect('/')
+
+@login_required(login_url='/login/')
+def delete_item(request, id_item):
+    usuario =request.user
+    #Itens.objects.filter(id=id_item).delete()
+    Itens.objects.get(id=id_item)
+    if usuario == item.usuario:
+        item.delete()
+    return redirect('/')
+

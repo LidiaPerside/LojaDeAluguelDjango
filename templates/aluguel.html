@@ -9,7 +9,12 @@
     <ul style="font-size: 18px">
         {%for item in itens %}
 
-            <li> {{ itens.item }} - {{ itens.get_data_aluguel }} </li>
+            <li>
+                {{ itens.item }} - {{ itens.get_data_aluguel }}
+
+                <a href="aluguel/?id={{ item.id }}"> (Editar </a>
+                / <a href="item/delete/{{ item.id }}"> Excluir </a>)
+            </li>
 
         {% endfor %}
     </ul>

@@ -23,7 +23,8 @@ urlpatterns = [
     path('aluguel/', views.lista_itens),
     path('aluguel/item/', views.item),
     path('aluguel/item/submit', views.submit_item),
-    #path('', views.index)
+    path('aluguel/item/delete/<int:id_item', views.delete_item),
+    #path('', views.index),
     path ('', RedirectView.as_view(url='/aluguel/')),
     path('login/', views.login_users),
     path('login/submit', views.submit_login),
