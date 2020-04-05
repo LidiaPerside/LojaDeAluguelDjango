@@ -37,3 +37,18 @@ def lista_itens(request):
     itens = Itens.objects.filter(usuario=usuario) #exibe os itens alugados por usuário
     dados = {'itens': itens}
     return render(request, 'aluguel.html', dados)
+
+@login_required(login_url='/login/')
+def item (request):
+    return render (request, 'item.html')
+
+@login_required(login_url='/login')
+def submit_item(request):
+    if request.POST:
+        item = request.POST.get('item')
+        data_aluguel = request.POST.get('data_aluguel')
+        descricao = request.POST.get('descricao')
+        usuario = request.user
+        Itens.objects.create(item=item, data_aluguel=data_aluguel, descricao=descricao, usuario=usuario)
+
+    return redirect('/')
