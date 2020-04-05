@@ -21,9 +21,10 @@ from django.views.generic import RedirectView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('aluguel/', views.lista_itens),
-    path('aluguel/item/', views.item),
+   path('aluguel/lista/<int:id_usuario>/', views.json_lista_item),
+    path('aluguel/lista/', views.item),
     path('aluguel/item/submit', views.submit_item),
-    path('aluguel/item/delete/<int:id_item', views.delete_item),
+    path('aluguel/item/delete/<int:id_item>/', views.delete_item),
     #path('', views.index),
     path ('', RedirectView.as_view(url='/aluguel/')),
     path('login/', views.login_users),

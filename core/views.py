@@ -3,6 +3,9 @@ from core.models import Itens
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from datetime import datetime, timedelta
+from django.http.response import Http404, JsonResponse
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -34,7 +37,9 @@ def lista_itens(request):
 
     usuario = request.user
     #itens = Itens.objects.all()
-    itens = Itens.objects.filter(usuario=usuario) #exibe os itens alugados por usuário
+    data_atual = datetime.now() - timedelta(hour=1)
+    #__gt é maior __lt é menor
+    itens = Itens.objects.filter(usuario=usuario, data_aluguel__gt=data_atual) #exibe os itens alugados por usuário
     dados = {'itens': itens}
     return render(request, 'aluguel.html', dados)
 
@@ -71,8 +76,20 @@ def submit_item(request):
 def delete_item(request, id_item):
     usuario =request.user
     #Itens.objects.filter(id=id_item).delete()
-    Itens.objects.get(id=id_item)
+    try:
+        item = Itens.objects.get(id=id_item)
+    except Exception:
+        raise Http404()
     if usuario == item.usuario:
         item.delete()
+    else:
+        raise Http404()
     return redirect('/')
 
+#@login_required(login_url='/login/')
+def json_lista_item(request, id_usuario):
+    usuario = User.objects.get(id=id_usuario)
+    #convertendo para o Json conseguir ler
+    itens = Itens.objects.filter(usuario=usuario).values('id', 'item')
+    #transformando em lista e colocando safe = false por não ser um dicionário
+    return JsonResponse(list(itens), safe=False)

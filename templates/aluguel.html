@@ -10,10 +10,14 @@
         {%for item in itens %}
 
             <li>
-                {{ itens.item }} - {{ itens.get_data_aluguel }}
+                <div style={% if item.get_item_atrasado %}
+                    "color:red">
+                    {% endif %}
+                    {{ itens.item }} - {{ itens.get_data_aluguel }}
 
-                <a href="aluguel/?id={{ item.id }}"> (Editar </a>
-                / <a href="item/delete/{{ item.id }}"> Excluir </a>)
+                    <a href="aluguel/?id={{ item.id }}"> (Editar </a>
+                    / <a href="item/delete/{{ item.id }}"> Excluir </a>)
+                </div>
             </li>
 
         {% endfor %}

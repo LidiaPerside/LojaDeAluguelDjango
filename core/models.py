@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
 # Create your models here.
 
 #Tabela de Itens
@@ -27,6 +28,12 @@ class Itens (models.Model):
 
     def get_data_input_item(self):
         return self.data_aluguel.strftime('%Y-%m-%dT%H:%M')
+
+    def get_item_atrasado(self):
+        if self.data_aluguel<datetime.now():
+            return True
+        else:
+            return False
 
 
     #reservaitem
