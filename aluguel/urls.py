@@ -22,5 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('aluguel/', views.lista_itens),
     #path('', views.index)
-    path ('', RedirectView.as_view(url='/aluguel/'))
+    path ('', RedirectView.as_view(url='/aluguel/')),
+    path('login/', views.login_users),
+    path('login/submit', views.submit_login),
+    path('logout/', views.logout_users)
 ]
